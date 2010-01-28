@@ -1,5 +1,17 @@
-### WebGame.js ###
-A basic JavaScript 2D game framework using HTML5 <canvas>.
-By Maikel Krause (mkrause.nl)
+WebGame.js
 
-The framework should work in any modern browser (that excludes IE).
+# Overview
+This framework is intended to make it easier to write games using JavaScript 
+and HTML5's 2D Canvas drawing API. In particular, the framework currently
+takes care of the following things:
+
+ - Game loop and timing
+ - User events
+ - Resource management (image and audio loading)
+
+Future versions may also also provide useful abstractions for things like
+drawing and animation.
+
+# Examples/demo
+See the tests/ directory for some simple examples, including a basic pong game
+written using WebGame.js.
