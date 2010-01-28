@@ -144,10 +144,7 @@ WebGame.prototype =
         if (this.controller && typeof(this.controller.update) == 'function') {
             // If we have an abnormally long delay, clamp to prevent overprocessing.
             // This means that, during a long delay (low FPS), the game slows down.
-            //TODO: determine the right way to handle this, wrt. the frame alpha
-            //if (delay > 2 * this.frameDelay) {
-            //    delay = 2 * this.frameDelay;
-            //}
+            delay = Math.min(delay, 2 * this.frameDelay);
             
             var dt = this.updateDelay;
             
