@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Pong!</title>
+    <link rel="stylesheet" href="style/base.css" type="text/css">
+    <script type="text/javascript" src="../src/webgame.js"></script>
+    <script type="text/javascript" src="script/debug.js"></script>
+    <script type="text/javascript">
+// This test should produce an entirely white <canvas>
+function test1()
+{
+    try {
+        var webgame = new WebGame('game-canvas');
+    } catch (e) {
+        trace(e);
+    }
+    webgame.ctx.fillStyle = 'white';
+    webgame.ctx.fillRect(0, 0, webgame.width, webgame.height);
+}
+
+window.addEventListener('load', test1, false);
+    </script>
+</head>
+<body>
+
+<h1>WebGame.js Test</h1>
+
+<div id="console">
+    <h2>Console</h2>
+    <p id="trace-vars"></p>
+    <p id="trace-log"></p>
+</div>
+
+<canvas tabindex="1" id="game-canvas" width="600" height="400">
+    <p>Your browser does not seem to be able to play this game. This game requires HTML5's &lt;canvas&gt;</p>
+</canvas>
+
+</body>
+</html>
