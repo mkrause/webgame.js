@@ -49,7 +49,7 @@ var WebGame = this.WebGame = function(canvas)
     }
     
     // FIXME: don't always want to catch events like mousemove, 
-    // perhaps only when an onMouseMove is defined?
+    // perhaps only when a mousemove handler is defined?
     this.catchKeyEvents();
     this.catchMouseEvents();
     this.catchMouseMove();
@@ -77,7 +77,8 @@ WebGame.prototype =
     // Game loop
     //-------------------------------------------------------
     
-    setController: function(controller) {
+    setController: function(controller)
+    {
         this.controller = controller;
         
         if (this.controller && typeof(this.controller.init) === 'function') {
@@ -85,11 +86,13 @@ WebGame.prototype =
         }
     },
     
-    getController: function() {
+    getController: function()
+    {
         return this.controller;
     },
     
-    setFrameRate: function(fps) {
+    setFrameRate: function(fps)
+    {
         if (fps <= 0) return;
         this.frameDelay = 1000 / fps;
         if (this.isRunning()) {
@@ -99,15 +102,18 @@ WebGame.prototype =
         }
     },
     
-    setUpdateRate: function(updateRate) {
+    setUpdateRate: function(updateRate)
+    {
         this.updateDelay = 1000 / updateRate;
     },
     
-    isRunning: function() {
+    isRunning: function()
+    {
         return this.loopHandle !== null;
     },
     
-    run: function() {
+    run: function()
+    {
         var that = this;
         if (this.isRunning()) {
             return;
@@ -118,7 +124,8 @@ WebGame.prototype =
         window.setTimeout(function() { that.frame() }, 0);
     },
     
-    stop: function() {
+    stop: function()
+    {
         window.clearInterval(this.loopHandle);
         this.loopHandle = null;
     },
@@ -285,11 +292,13 @@ WebGame.prototype =
         }
     },
     
-    keyPressed: function(key) {
+    keyPressed: function(key)
+    {
         return !!this.keyStates[this.keys[key]];
     },
     
-    mouseDown: function() {
+    mouseDown: function()
+    {
         return this.mouseState;
     },
     
@@ -330,6 +339,9 @@ WebGame.prototype =
         return file;
     },
     
-    loadAudio: function(filePath, loadFunc) {}
+    loadAudio: function(filePath, loadFunc)
+    {
+        //TODO
+    }
 };
 })();
