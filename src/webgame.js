@@ -81,9 +81,9 @@ WebGame.prototype =
     {
         this.controller = controller;
         
-        if (this.controller && typeof(this.controller.init) === 'function') {
-            this.controller.init();
-        }
+        //if (this.controller && typeof(this.controller.init) === 'function') {
+        //    this.controller.init();
+        //}
     },
     
     getController: function()
@@ -141,7 +141,7 @@ WebGame.prototype =
         
         var alpha = false;
         
-        if (this.controller && typeof(this.controller.update) == 'function') {
+        if (this.controller && typeof(this.controller.update) === 'function') {
             // If we have an abnormally long delay, clamp to prevent overprocessing.
             // This means that, during a long delay (low FPS), the game slows down.
             delay = Math.min(delay, 2 * this.frameDelay);
@@ -163,7 +163,7 @@ WebGame.prototype =
             alpha = this.accumulator / dt;
         }
         
-        if (this.controller && typeof(this.controller.draw) == 'function') {
+        if (this.controller && typeof(this.controller.draw) === 'function') {
             this.ctx.save();
             this.controller.draw(this.ctx, alpha);
             this.ctx.restore();
