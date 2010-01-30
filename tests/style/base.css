@@ -47,7 +47,6 @@ h1 {
     font: 15px "Courier New";
     background: #222;
     color: #090;
-    z-index: -1;
 }
 
 #console h2 {

@@ -12,19 +12,33 @@ function pong()
         
         this.init = function()
         {
-            webgame.setFrameRate(1);
             titleImage = webgame.loadImage('images/pong.jpg');
+        }
+        
+        this.wakeUp = function()
+        {
+            webgame.setFrameRate(1);
         }
         
         this.keyEvent = function(key, pressed)
         {
             if (key == webgame.keys.enter) {
+                // We're (re)starting the game, so make a new PlayController
+                playController = new PlayController();
                 webgame.setController(playController);
             }
         };
         
         this.draw = function(ctx)
         {
+            if (!titleImage.complete) {
+                ctx.font = "26px 'Lucida Granda', Verdana, sans-serif";
+                ctx.fillStyle = 'white';
+                var text = "Loading...";
+                ctx.fillText(text, webgame.width / 2 - ctx.measureText(text).width / 2, 220);
+                return;
+            }
+            
             ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, webgame.width, webgame.height);
             
@@ -35,18 +49,20 @@ function pong()
             var text = "Press enter to play";
             ctx.fillText(text, webgame.width / 2 - ctx.measureText(text).width / 2, 220);
         }
+        
+        this.init();
     }
     
     function PlayController()
     {
+        var paused;
         var paddle1; // Player
         var paddle2; // AI
         var ball;
         
         this.init = function()
         {
-            webgame.setFrameRate(50);
-            webgame.setUpdateRate(100);
+            paused = false;
             
             paddle1 = {
                 score: 0,
@@ -73,7 +89,13 @@ function pong()
                 speed: 0.5, // pixels/ms
                 v: [1,0] // Velocity vector (x,y)
             };
-        };
+        }
+        
+        this.wakeUp = function()
+        {
+            webgame.setFrameRate(50);
+            webgame.setUpdateRate(100);
+        }
         
         this.keyEvent = function(key, pressed)
         {
@@ -82,6 +104,18 @@ function pong()
                 case webgame.keys.q:
                     webgame.setController(titleController);
                     break;
+                case webgame.keys.p:
+                    if (paused) {
+                        paused = false;
+                        webgame.run();
+                    } else {
+                        paused = true;
+                        webgame.stop();
+                        var ctx = webgame.ctx;
+                        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                        ctx.fillRect(0, 0, webgame.width, webgame.height);
+                    }
+                    break;
                 }
             }
         };
@@ -89,8 +123,8 @@ function pong()
         this.draw = function(ctx)
         {
             // Draw field
-            //ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-            ctx.fillStyle = 'black';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            //ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, webgame.width, webgame.height);
             
             ctx.beginPath();
@@ -185,6 +219,8 @@ function pong()
                 paddle1.score++;
             }
         };
+        
+        this.init();
     }
     
     //-------------------------------------------------------
@@ -199,15 +235,16 @@ function pong()
     
     try {
         webgame = new WebGame(canvas);
-    }
-    catch (e) {
+    } catch (e) {
         // Handle exceptions like Canvas 2D not being supported
         trace(e);
         return;
     }
     
-    var titleController = new TitleController();
-    var playController = new PlayController();
+    var titleController;
+    var playController;
+    
+    titleController = new TitleController();
     webgame.setController(titleController);
     webgame.run();
 }
