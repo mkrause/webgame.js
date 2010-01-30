@@ -1,42 +1,22 @@
 /*
  * WebGame.js v0.2
  * Basic 2D game framework using HTML5 <canvas>
- * http://code.google.com/p/webgamejs
+ * 
+ * Copyright (c) 2010 Maikel Krause
+ * Released under the MIT license.
  * 
  * Date: Januari 2010
- * Copyright (c) 2010 Maikel Krause (http://mkrause.nl)
- * 
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- * 
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
  */
 
 (function() {
-var WebGame = this.WebGame = function(canvas)
+var WebGame = window.WebGame = function(canvas)
 {
     if (typeof(canvas) === 'string') {
         canvas = document.getElementById(canvas);
     }
     
     if (!canvas || !canvas.getContext) {
-        throw "WebGame: could not obtain a rendering context";
+        throw 'WebGame: could not obtain a rendering context';
     }
     
     this.canvas = canvas;
@@ -45,15 +25,15 @@ var WebGame = this.WebGame = function(canvas)
     this.ctx = canvas.getContext('2d');
     
     if (!this.ctx) {
-        throw "WebGame: canvas 2D rendering context not supported";
+        throw 'WebGame: canvas 2D rendering context not supported';
     }
     
-    // FIXME: don't always want to catch events like mousemove, 
+    //FIXME: don't always want to catch events like mousemove, 
     // perhaps only when a mousemove handler is defined?
     this.catchKeyEvents();
     this.catchMouseEvents();
     this.catchMouseMove();
-}
+};
 
 WebGame.prototype =
 {
@@ -81,9 +61,9 @@ WebGame.prototype =
     {
         this.controller = controller;
         
-        //if (this.controller && typeof(this.controller.init) === 'function') {
-        //    this.controller.init();
-        //}
+        if (this.controller && typeof(this.controller.wakeUp) === 'function') {
+            this.controller.wakeUp();
+        }
     },
     
     getController: function()
@@ -109,7 +89,7 @@ WebGame.prototype =
     
     isRunning: function()
     {
-        return this.loopHandle !== null;
+        return !!this.loopHandle;
     },
     
     run: function()
