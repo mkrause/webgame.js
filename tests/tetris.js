@@ -1,7 +1,7 @@
 /*
  * tetris.js v0.1
  * Tetris demo using WebGame.js
- * Date: Januari 2010
+ * Date: January 2010
  */
 
 function tetris()

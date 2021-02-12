@@ -1,7 +1,7 @@
 /*
  * pong.js v0.1
  * Pong demo using WebGame.js
- * Date: Januari 2010
+ * Date: January 2010
  */
 
 function pong()
